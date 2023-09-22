@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="ticTacToeApp">
+<head>
+  <title>Tic Tac Toe</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+  <style>
+    .cell {
+      border: 1px solid #000;
+      width: 32px;
+      height: 32px;
+      text-align: center;
+      font-size: 24px;
+      line-height: 32px;
+      display: inline-block;
+    }
+    .row:after {
+      content: "";
+      display: block;
+      clear: both;
+    }
+    .column {
+      float: left;
+    }
+    .line {
+      position: absolute;
+      background-color: red;
+      height: 3px;
+      width: 0;
+      transition: width 0.5s ease-in-out;
+    }
+
+    /* Add styles for X and O */
+    .cell-x {
+      color: blue; /* Change the color for X */
+    }
+
+    .cell-o {
+      color: green; /* Change the color for O */
+    }
+  </style>
+</head>
+<body ng-controller="GameController as game">
+  <h1>Tic Tac Toe</h1>
+  
+  <div class="row" ng-repeat="row in game.board">
+    <div class="cell column" ng-repeat="cell in row track by $index" ng-click="game.makeMove($parent.$index, $index)">
+      <span ng-class="{ 'cell-x': cell === 'X', 'cell-o': cell === 'O' }">{{ cell }}</span>
+    </div>
+  </div>
+
+  <button ng-click="game.resetGame()">Reset Game</button>
+  
+  <div class="line" ng-style="game.lineStyle"></div>
+</body>
+</html>
+
