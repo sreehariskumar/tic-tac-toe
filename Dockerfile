@@ -1,5 +1,8 @@
-# Use the official Alpine image as the base image
+# Use Alpine Linux as the base image
 FROM alpine:3.17
+
+# Install Node.js and npm
+RUN apk --no-cache add nodejs npm
 
 # Set the working directory
 WORKDIR /app
@@ -7,17 +10,11 @@ WORKDIR /app
 # Copy the frontend files
 COPY app.js index.html /app/
 
-# Install necessary packages (assuming you need a web server to serve the frontend)
-RUN apk --no-cache add nginx
+# Install http-server globally
+RUN npm install -g http-server
 
-# Remove the default Nginx configuration file
-RUN rm /etc/nginx/conf.d/default.conf
+# Expose port 8080 (http-server default port)
+EXPOSE 8080
 
-# Copy custom Nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/
-
-# Expose port 80
-EXPOSE 80
-
-# Start Nginx when the container runs
-CMD ["nginx", "-g", "daemon off;"]
+# Start the HTTP server
+CMD ["http-server", "."]
