@@ -12,35 +12,16 @@ let board = [
 
 let currentPlayer = 'X';
 
-app.get('/api/board', (req, res) => {
-  res.json({ board, currentPlayer });
+// Serve the index.html for the root route
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/../frontend/index.html');
 });
 
-app.post('/api/move', (req, res) => {
-  const { row, col } = req.body;
+// Add your other route handlers here...
 
-  if (board[row][col] === '' && currentPlayer) {
-    board[row][col] = currentPlayer;
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    res.json({ success: true, currentPlayer });
-  } else {
-    res.json({ success: false });
-  }
-});
-
-app.post('/api/reset', (req, res) => {
-  board = [
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', '']
-  ];
-  currentPlayer = 'X';
-  res.json({ success: true, currentPlayer });
-});
-
-// Serve the frontend
-app.use(express.static(__dirname + '/../frontend'));
+// Rest of your existing route handlers...
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+

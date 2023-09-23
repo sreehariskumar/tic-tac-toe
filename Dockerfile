@@ -10,6 +10,7 @@ WORKDIR /app
 # Copy the backend files
 COPY server.js /app/
 COPY package.json package-lock.json /app/
+COPY node_modules/ /app/
 
 # Install dependencies
 RUN npm install
@@ -19,3 +20,4 @@ EXPOSE 3000
 
 # Start the backend server
 CMD ["node", "server.js"]
+
